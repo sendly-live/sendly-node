@@ -1,0 +1,68 @@
+# Source files (dist is included)
+src/
+test/
+tests/
+
+# Development files
+*.test.ts
+*.spec.ts
+jest.config.js
+tsconfig.json
+.eslintrc*
+.prettierrc*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# Build artifacts (keep dist/)
+# dist/ is intentionally NOT ignored - we publish built files
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Dependency directories
+node_modules/
+
+# Git
+.git/
+.gitignore
+
+# GitHub
+.github/
+
+# Documentation source (keep README.md)
+docs/
+
+# Examples (we might want to include these later)
+examples/
+
+# Package lock files
+package-lock.json
+yarn.lock
