@@ -1,6 +1,6 @@
 # @sendly/node
 
-Official Node.js SDK for Sendly - SMS for developers.
+Official Node.js SDK for the Sendly SMS API.
 
 ## Installation
 
@@ -11,9 +11,9 @@ npm install @sendly/node
 ## Quick Start
 
 ```javascript
-import { Sendly } from '@sendly/node';
+import { SendlyClient } from '@sendly/node';
 
-const sendly = new Sendly('sl_live_YOUR_API_KEY');
+const sendly = new SendlyClient('sl_live_...');
 
 await sendly.sms.send({
   to: '+14155552671',
@@ -21,46 +21,46 @@ await sendly.sms.send({
 });
 ```
 
-## Features
+## API Reference
 
-- **Instant setup** - From npm install to first SMS in under 2 minutes
-- **Smart routing** - Automatic number selection (toll-free for US, local for UK)
-- **High throughput** - 1,200 messages/minute on toll-free numbers
-- **TypeScript support** - Full type definitions included
-- **Auto-retry** - Built-in exponential backoff for failed requests
-- **Real-time tracking** - Monitor delivery status and costs
-
-## Authentication
-
-Get your API key from [sendly.live](https://sendly.live):
+### Initialize Client
 
 ```javascript
-import { Sendly } from '@sendly/node';
+import { SendlyClient } from '@sendly/node';
 
-// Initialize with API key
-const sendly = new Sendly('sl_live_YOUR_API_KEY');
+// Simple initialization
+const sendly = new SendlyClient('sl_live_...');
 
-// Or with options
-const sendly = new Sendly({
+// With options
+const sendly = new SendlyClient({
   apiKey: process.env.SENDLY_API_KEY,
-  baseUrl: 'https://sendly.live',
-  timeout: 30000
+  baseUrl: 'https://sendly.live/api',  // Optional: custom base URL
+  timeout: 30000                         // Optional: request timeout (ms)
 });
 ```
-
-## Basic Usage
 
 ### Send SMS
 
 ```javascript
 const result = await sendly.sms.send({
-  to: '+14155552671',
-  text: 'Hello from Sendly!'
+  to: string,              // Required: E.164 format (+14155552671)
+  text: string,            // Required: Message content
+  from?: string,           // Optional: Sender ID (auto-selected if omitted)
+  messageType?: string,    // Optional: 'transactional' | 'marketing' | 'otp'
+  webhookUrl?: string,     // Optional: Delivery status webhook
+  webhookFailoverUrl?: string, // Optional: Backup webhook URL
+  tags?: string[]          // Optional: Custom tags for filtering
 });
 
-console.log(`Message sent! ID: ${result.id}`);
-console.log(`Status: ${result.status}`);
-console.log(`From: ${result.from_}`);
+// Returns
+{
+  id: string,              // Message ID
+  status: string,          // 'queued' | 'sent' | 'delivered' | 'failed'
+  to: string,              // Recipient number
+  from: string,            // Sender number
+  cost: number,            // Cost in USD
+  segments: number         // Number of message segments
+}
 ```
 
 ### Send MMS
@@ -68,197 +68,178 @@ console.log(`From: ${result.from_}`);
 ```javascript
 await sendly.sms.send({
   to: '+14155552671',
-  text: 'Check out this image!',
-  mediaUrls: ['https://example.com/image.jpg'],
-  subject: 'Photo from our trip'
-});
-```
-
-### Message Types
-
-```javascript
-// OTP/Verification
-await sendly.sms.send({
-  to: '+14155552671',
-  text: 'Your verification code: 123456',
-  messageType: 'otp'
-});
-
-// Transactional
-await sendly.sms.send({
-  to: '+14155552671',
-  text: 'Your order #12345 has shipped!',
-  messageType: 'transactional'
-});
-
-// Marketing
-await sendly.sms.send({
-  to: '+14155552671',
-  text: '50% off this weekend only!',
-  messageType: 'marketing'
+  text: 'Check this out!',
+  mediaUrls: [
+    'https://example.com/image.jpg',
+    'https://example.com/video.mp4'
+  ],
+  subject: 'Photo Gallery'  // Optional: MMS subject line
 });
 ```
 
 ## Error Handling
 
+All errors extend `SendlyError` with a `code` property:
+
 ```javascript
-import { ValidationError, AuthenticationError, RateLimitError, ApiError } from '@sendly/node';
+import { 
+  SendlyClient, 
+  ValidationError, 
+  AuthenticationError, 
+  RateLimitError, 
+  ApiError 
+} from '@sendly/node';
 
 try {
-  await sendly.sms.send({
-    to: '+14155552671',
-    text: 'Hello!'
-  });
+  await sendly.sms.send({ to: '+1...', text: '...' });
 } catch (error) {
-  if (error instanceof ValidationError) {
-    console.log('Invalid input:', error.message);
-  } else if (error instanceof AuthenticationError) {
-    console.log('Authentication failed:', error.message);
-  } else if (error instanceof RateLimitError) {
-    console.log('Rate limit exceeded:', error.message);
-    console.log('Retry after:', error.retryAfter, 'seconds');
-  } else if (error instanceof ApiError) {
-    console.log('API error:', error.message);
-    console.log('Status code:', error.statusCode);
+  console.error(error.code, error.message);
+}
+```
+
+### Error Codes
+
+| Code | Class | Description | Action |
+|------|-------|-------------|--------|
+| `INVALID_PHONE` | `ValidationError` | Invalid phone number format | Fix number, use E.164 |
+| `INVALID_API_KEY` | `AuthenticationError` | API key missing or invalid | Check API key |
+| `RATE_LIMIT` | `RateLimitError` | Too many requests | Retry after delay |
+| `INSUFFICIENT_BALANCE` | `ApiError` | No credits remaining | Add credits |
+| `NETWORK_ERROR` | `ApiError` | Network/timeout issue | Retry with backoff |
+
+### Retry Example
+
+```javascript
+async function sendWithRetry(params, maxRetries = 3) {
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      return await sendly.sms.send(params);
+    } catch (error) {
+      if (error instanceof RateLimitError && i < maxRetries - 1) {
+        const delay = Math.pow(2, i) * 1000;
+        await new Promise(resolve => setTimeout(resolve, delay));
+        continue;
+      }
+      throw error;
+    }
   }
 }
 ```
+
+## Rate Limits
+
+**Toll-Free Numbers (US/Canada):**
+- **1,200 messages/minute** for transactional/OTP
+- **600 messages/minute** for marketing
+
+**International Numbers:**
+- **100 messages/minute** per destination country
+
+**429 Response Headers:**
+```
+X-RateLimit-Limit: 1200
+X-RateLimit-Remaining: 847
+X-RateLimit-Reset: 1640000000
+```
+
+SDK automatically retries 429 responses with exponential backoff.
 
 ## Sandbox Testing
 
-Use test API keys for development. The sandbox provides magic numbers for testing different scenarios:
+Test keys (`sl_test_...`) use magic numbers for testing scenarios:
 
 ### Success Scenarios
 
-| Phone Number | Behavior |
-|--------------|----------|
-| `+15550001234` | Instant delivery |
+| Number | Behavior |
+|--------|----------|
+| `+15550001234` | Instant delivery (0ms) |
 | `+15550001010` | 10 second delay |
 | `+15550001030` | 30 second delay |
+| `+15550001060` | 60 second delay |
 
 ### Error Scenarios
 
-| Phone Number | Error Type | HTTP Status |
-|--------------|------------|-------------|
+| Number | Error | HTTP Status |
+|--------|-------|-------------|
 | `+15550009999` | Invalid number | 400 |
 | `+15550009998` | Carrier rejection | 400 |
-| `+15550009997` | Rate limit exceeded | 429 |
-| `+15550009996` | Timeout error | 500 |
+| `+15550009997` | Rate limit | 429 |
+| `+15550009996` | Temporary failure | 500 |
+| `+15550009995` | Server error | 503 |
 
-Example:
+### Example
 
 ```javascript
-const sendly = new Sendly('sl_test_YOUR_TEST_KEY');
-
-// Test instant success
+// Test instant delivery
 await sendly.sms.send({
   to: '+15550001234',
-  text: 'Testing instant delivery'
+  text: 'Test message'
 });
 
-// Test rate limit error
+// Test error handling
 try {
   await sendly.sms.send({
-    to: '+15550009997',
-    text: 'Testing rate limit'
+    to: '+15550009999',  // Invalid number
+    text: 'This will fail'
   });
 } catch (error) {
-  console.log('Rate limit handled:', error.retryAfter);
-}
-```
-
-## Framework Integration
-
-### Express.js
-
-```javascript
-const express = require('express');
-const { Sendly } = require('@sendly/node');
-
-const app = express();
-const sendly = new Sendly(process.env.SENDLY_API_KEY);
-
-app.post('/send-notification', async (req, res) => {
-  try {
-    const result = await sendly.sms.send({
-      to: req.body.phone,
-      text: `Your order #${req.body.orderId} is ready!`
-    });
-    res.json({ success: true, messageId: result.id });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-```
-
-### Next.js API Routes
-
-```javascript
-import { Sendly } from '@sendly/node';
-
-const sendly = new Sendly(process.env.SENDLY_API_KEY);
-
-export async function POST(request) {
-  const { phone } = await request.json();
-  const otp = Math.random().toString().slice(2, 8);
-  
-  await sendly.sms.send({
-    to: phone,
-    text: `Your verification code: ${otp}`,
-    messageType: 'otp'
-  });
-  
-  return Response.json({ success: true });
+  console.log(error.code); // 'INVALID_PHONE'
 }
 ```
 
 ## TypeScript Support
 
+Full TypeScript definitions included:
+
 ```typescript
-import { Sendly, SMSSendRequest, SMSSendResponse } from '@sendly/node';
+import { SendlyClientSendlyClient, SMSSendRequest, SMSSendResponse } from '@sendly/node';
 
-const sendly = new Sendly(process.env.SENDLY_API_KEY!);
+const sendly = new SendlyClient(process.env.SENDLY_API_KEY!);
 
-const sendWelcome = async (phone: string, name: string): Promise<string> => {
-  const request: SMSSendRequest = {
-    to: phone,
-    text: `Welcome ${name}! Thanks for signing up.`,
-    messageType: 'transactional'
-  };
-  
-  const response: SMSSendResponse = await sendly.sms.send(request);
-  return response.id;
+const request: SMSSendRequest = {
+  to: '+14155552671',
+  text: 'Hello!',
+  messageType: 'transactional'
 };
+
+const response: SMSSendResponse = await sendly.sms.send(request);
+console.log(response.id);
 ```
 
-## Response Format
+## Webhooks
+
+Receive delivery status updates:
 
 ```javascript
-{
-  id: "msg_abc123def456",
-  status: "sent",
-  from_: "+18332930104",
-  to: "+14155552671", 
-  text: "Hello from Sendly!",
-  created_at: "2024-01-27T10:30:00Z",
-  segments: 1,
-  cost: 0.0045,
-  direction: "outbound",
-  routing: {
-    number_type: "toll_free",
-    rate_limit: 1200,
-    coverage: "US/Canada",
-    country_code: "1"
+import express from 'express';
+
+const app = express();
+app.use(express.json());
+
+app.post('/webhook', (req, res) => {
+  const { type, messageId, status, to } = req.body;
+  
+  switch (type) {
+    case 'message.delivered':
+      console.log(`Message ${messageId} delivered to ${to}`);
+      break;
+    case 'message.failed':
+      console.log(`Message ${messageId} failed`);
+      break;
   }
-}
+  
+  res.status(200).send('OK');
+});
+
+app.listen(3000);
 ```
 
-## Links
+## Support
 
-- Documentation: [sendly.live/docs](https://sendly.live/docs)
-- Dashboard: [sendly.live](https://sendly.live)
-- Issues: [GitHub Issues](https://github.com/sendly-live/sendly-node/issues)
-- Support: support@sendly.live
+- **Documentation:** https://sendly.live/docs
+- **API Reference:** https://sendly.live/api-reference
+- **Dashboard:** https://sendly.live/dashboard
+- **Issues:** https://github.com/sendly/sendly-node/issues
 
 ## License
 

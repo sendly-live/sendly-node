@@ -362,7 +362,7 @@ describe("SMS Resource", () => {
 
       expect(result).toEqual(mockResponse);
       expect(mockFetch).toHaveBeenCalledWith(
-        "https://api.sendly.live/v1/send",
+        "https://sendly.live/api/v1/send",
         {
           method: "POST",
           headers: {
@@ -450,7 +450,7 @@ describe("SMS Resource", () => {
 
       expect(result).toEqual(mockResponse);
       expect(mockFetch).toHaveBeenCalledWith(
-        "https://api.sendly.live/v1/send",
+        "https://sendly.live/api/v1/send",
         {
           method: "POST",
           headers: {
@@ -512,7 +512,7 @@ describe("SMS Resource", () => {
 
       expect(result).toEqual(mockResponse);
       expect(mockFetch).toHaveBeenCalledWith(
-        "https://api.sendly.live/v1/send",
+        "https://sendly.live/api/v1/send",
         {
           method: "POST",
           headers: {
@@ -676,7 +676,7 @@ describe("SMS Resource", () => {
 
       expect(result).toEqual(mockResponse);
       expect(mockFetch).toHaveBeenCalledWith(
-        "https://api.sendly.live/v1/send",
+        "https://sendly.live/api/v1/send",
         {
           method: "POST",
           headers: {
@@ -730,7 +730,7 @@ describe("SMS Resource", () => {
 
       expect(result).toEqual(mockResponse);
       expect(mockFetch).toHaveBeenCalledWith(
-        "https://api.sendly.live/v1/send",
+        "https://sendly.live/api/v1/send",
         {
           method: "POST",
           headers: {
@@ -783,7 +783,7 @@ describe("SMS Resource", () => {
 
       expect(result).toEqual(mockResponse);
       expect(mockFetch).toHaveBeenCalledWith(
-        "https://api.sendly.live/v1/send",
+        "https://sendly.live/api/v1/send",
         {
           method: "POST",
           headers: {
@@ -843,7 +843,7 @@ describe("SMS Resource", () => {
 
       expect(result).toEqual(mockResponse);
       expect(mockFetch).toHaveBeenCalledWith(
-        "https://api.sendly.live/v1/send",
+        "https://sendly.live/api/v1/send",
         {
           method: "POST",
           headers: {

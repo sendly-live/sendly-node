@@ -1,0 +1,1 @@
+{"version":3,"file":"authentication-error.d.ts","sourceRoot":"","sources":["../../src/errors/authentication-error.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,SAAS,EAAE,MAAM,cAAc,CAAC;AAEzC,qBAAa,mBAAoB,SAAQ,SAAS;IAChD,SAAgB,UAAU,EAAE,MAAM,CAAC;gBAEvB,OAAO,EAAE,MAAM,EAAE,UAAU,GAAE,MAAY;CAKtD"}
