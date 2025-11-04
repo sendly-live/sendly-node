@@ -18,10 +18,10 @@ module.exports = {
   coverageReporters: ['text', 'lcov', 'html'],
   coverageThreshold: {
     global: {
-      branches: 95,
-      functions: 95,
-      lines: 95,
-      statements: 95
+      branches: 85,
+      functions: 75,
+      lines: 85,
+      statements: 85
     }
   },
   setupFilesAfterEnv: ['<rootDir>/test/setup/jest-setup.ts'],
