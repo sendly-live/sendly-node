@@ -29,13 +29,11 @@ describe("Sendly Client", () => {
 
     it("should use default values when not provided", () => {
       const client = new Sendly("sk_test_v1_valid_key");
-      expect(client.getBaseUrl()).toBe("https://sendly.live/api");
+      expect(client.getBaseUrl()).toBe("https://sendly.live/api/v1");
     });
 
     it("should throw error for invalid API key format", () => {
-      expect(() => new Sendly("invalid_key")).toThrow(
-        "Invalid API key format",
-      );
+      expect(() => new Sendly("invalid_key")).toThrow("Invalid API key format");
     });
 
     it("should throw error for empty API key", () => {
@@ -108,7 +106,7 @@ describe("Sendly Client", () => {
 
     it("should return default base URL", () => {
       const client = new Sendly("sk_test_v1_valid_key");
-      expect(client.getBaseUrl()).toBe("https://sendly.live/api");
+      expect(client.getBaseUrl()).toBe("https://sendly.live/api/v1");
     });
   });
 

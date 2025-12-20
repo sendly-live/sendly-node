@@ -137,7 +137,7 @@ const sendly = new Sendly({
   apiKey: 'sk_live_v1_xxx',
   
   // Optional: Custom base URL (for testing)
-  baseUrl: 'https://sendly.live/api',
+  baseUrl: 'https://sendly.live/api/v1',
   
   // Optional: Request timeout in ms (default: 30000)
   timeout: 60000,

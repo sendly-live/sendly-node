@@ -7,7 +7,7 @@ import type { SendlyConfig, RateLimitInfo } from "./types";
 import { HttpClient } from "./utils/http";
 import { MessagesResource } from "./resources/messages";
 
-const DEFAULT_BASE_URL = "https://sendly.live/api";
+const DEFAULT_BASE_URL = "https://sendly.live/api/v1";
 const DEFAULT_TIMEOUT = 30000;
 const DEFAULT_MAX_RETRIES = 3;
 

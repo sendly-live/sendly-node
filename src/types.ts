@@ -18,7 +18,7 @@ export interface SendlyConfig {
 
   /**
    * Base URL for the Sendly API
-   * @default "https://sendly.live/api"
+   * @default "https://sendly.live/api/v1"
    */
   baseUrl?: string;
 
@@ -392,7 +392,11 @@ export interface BatchMessageResult {
 /**
  * Batch status values
  */
-export type BatchStatus = "processing" | "completed" | "partial_failure";
+export type BatchStatus =
+  | "processing"
+  | "completed"
+  | "partial_failure"
+  | "failed";
 
 /**
  * Response from sending batch messages

@@ -11,7 +11,7 @@ import {
   RateLimitError,
 } from "../errors";
 
-const DEFAULT_BASE_URL = "https://sendly.live/api/";
+const DEFAULT_BASE_URL = "https://sendly.live/api/v1";
 const DEFAULT_TIMEOUT = 30000;
 const DEFAULT_MAX_RETRIES = 3;
 
@@ -232,7 +232,7 @@ export class HttpClient {
       Authorization: `Bearer ${this.config.apiKey}`,
       "Content-Type": "application/json",
       Accept: "application/json",
-      "User-Agent": "@sendly/node/1.0.0",
+      "User-Agent": "@sendly/node/1.0.5",
       ...additionalHeaders,
     };
   }
