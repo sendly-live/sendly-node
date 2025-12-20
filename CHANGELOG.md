@@ -1,5 +1,11 @@
 # @sendly/node
 
+## 1.0.3
+
+### Patch Changes
+
+- fix: improve release workflow reliability for Java and .NET SDKs
+
 ## 1.0.2
 
 ### Patch Changes
