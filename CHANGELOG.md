@@ -1,5 +1,11 @@
 # @sendly/node
 
+## 1.0.4
+
+### Patch Changes
+
+- chore: sync all SDK versions
+
 ## 1.0.3
 
 ### Patch Changes
