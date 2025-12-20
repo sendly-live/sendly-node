@@ -86,7 +86,7 @@ export class MessagesResource {
     // Make API request
     const message = await this.http.request<Message>({
       method: "POST",
-      path: "/v1/messages",
+      path: "/messages",
       body: {
         to: request.to,
         text: request.text,
@@ -127,7 +127,7 @@ export class MessagesResource {
     // Make API request
     const response = await this.http.request<MessageListResponse>({
       method: "GET",
-      path: "/v1/messages",
+      path: "/messages",
       query: {
         limit: options.limit,
         offset: options.offset,
@@ -163,7 +163,7 @@ export class MessagesResource {
     // Make API request
     const message = await this.http.request<Message>({
       method: "GET",
-      path: `/v1/messages/${encodeURIComponent(id)}`,
+      path: `/messages/${encodeURIComponent(id)}`,
     });
 
     return message;
@@ -199,7 +199,7 @@ export class MessagesResource {
     while (hasMore) {
       const response = await this.http.request<MessageListResponse>({
         method: "GET",
-        path: "/v1/messages",
+        path: "/messages",
         query: {
           limit: batchSize,
           offset,
@@ -269,7 +269,7 @@ export class MessagesResource {
 
     const scheduled = await this.http.request<ScheduledMessage>({
       method: "POST",
-      path: "/v1/messages/schedule",
+      path: "/messages/schedule",
       body: {
         to: request.to,
         text: request.text,
@@ -303,7 +303,7 @@ export class MessagesResource {
 
     const response = await this.http.request<ScheduledMessageListResponse>({
       method: "GET",
-      path: "/v1/messages/scheduled",
+      path: "/messages/scheduled",
       query: {
         limit: options.limit,
         offset: options.offset,
@@ -331,7 +331,7 @@ export class MessagesResource {
 
     const scheduled = await this.http.request<ScheduledMessage>({
       method: "GET",
-      path: `/v1/messages/scheduled/${encodeURIComponent(id)}`,
+      path: `/messages/scheduled/${encodeURIComponent(id)}`,
     });
 
     return scheduled;
@@ -359,7 +359,7 @@ export class MessagesResource {
 
     const result = await this.http.request<CancelledMessageResponse>({
       method: "DELETE",
-      path: `/v1/messages/scheduled/${encodeURIComponent(id)}`,
+      path: `/messages/scheduled/${encodeURIComponent(id)}`,
     });
 
     return result;
@@ -417,7 +417,7 @@ export class MessagesResource {
 
     const batch = await this.http.request<BatchMessageResponse>({
       method: "POST",
-      path: "/v1/messages/batch",
+      path: "/messages/batch",
       body: {
         messages: request.messages,
         ...(request.from && { from: request.from }),
@@ -449,7 +449,7 @@ export class MessagesResource {
 
     const batch = await this.http.request<BatchMessageResponse>({
       method: "GET",
-      path: `/v1/messages/batch/${encodeURIComponent(batchId)}`,
+      path: `/messages/batch/${encodeURIComponent(batchId)}`,
     });
 
     return batch;
@@ -477,7 +477,7 @@ export class MessagesResource {
 
     const response = await this.http.request<BatchListResponse>({
       method: "GET",
-      path: "/v1/messages/batches",
+      path: "/messages/batches",
       query: {
         limit: options.limit,
         offset: options.offset,
