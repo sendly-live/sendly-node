@@ -1,5 +1,28 @@
 # @sendly/node
 
+## 2.2.0
+
+### Major Changes
+
+- [`18380b7`](https://github.com/sendly-live/sendly/commit/18380b7f6f4fa043d85204e0d6477ef72860e750) Thanks [@sendly-live](https://github.com/sendly-live)! - ## Version Alignment
+
+  Bump all SDKs to v2.2.0 to align version numbers across all registries.
+
+  ### Why 2.2.0?
+
+  Some registries had higher version numbers from earlier manual publishes:
+  - RubyGems: 1.5.1
+  - Packagist: 2.1.0
+
+  By releasing 2.2.0 across all 8 SDKs, we ensure:
+  - Consistent version numbers everywhere
+  - Clear indication of the "latest" version
+  - Simplified documentation and support
+
+  ### No Breaking Changes
+
+  Despite the major version bump, this release contains no breaking changes from 1.1.0. The version bump is purely for registry alignment.
+
 ## 1.1.0
 
 ### Minor Changes
