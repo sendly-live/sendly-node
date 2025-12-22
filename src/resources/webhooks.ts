@@ -4,6 +4,7 @@
  */
 
 import type { HttpClient } from "../utils/http";
+import { transformKeys } from "../utils/transform";
 import type {
   Webhook,
   WebhookCreatedResponse,
@@ -76,7 +77,7 @@ export class WebhooksResource {
       throw new Error("At least one event type is required");
     }
 
-    const webhook = await this.http.request<WebhookCreatedResponse>({
+    const response = await this.http.request<unknown>({
       method: "POST",
       path: "/webhooks",
       body: {
@@ -87,7 +88,8 @@ export class WebhooksResource {
       },
     });
 
-    return webhook;
+    // Transform snake_case API response to camelCase SDK types
+    return transformKeys<WebhookCreatedResponse>(response);
   }
 
   /**
@@ -105,12 +107,13 @@ export class WebhooksResource {
    * ```
    */
   async list(): Promise<Webhook[]> {
-    const webhooks = await this.http.request<Webhook[]>({
+    const response = await this.http.request<unknown[]>({
       method: "GET",
       path: "/webhooks",
     });
 
-    return webhooks;
+    // Transform snake_case API response to camelCase SDK types
+    return response.map((item) => transformKeys<Webhook>(item));
   }
 
   /**
@@ -132,12 +135,13 @@ export class WebhooksResource {
       throw new Error("Invalid webhook ID format");
     }
 
-    const webhook = await this.http.request<Webhook>({
+    const response = await this.http.request<unknown>({
       method: "GET",
       path: `/webhooks/${encodeURIComponent(id)}`,
     });
 
-    return webhook;
+    // Transform snake_case API response to camelCase SDK types
+    return transformKeys<Webhook>(response);
   }
 
   /**
@@ -172,7 +176,7 @@ export class WebhooksResource {
       throw new Error("Webhook URL must be HTTPS");
     }
 
-    const webhook = await this.http.request<Webhook>({
+    const response = await this.http.request<unknown>({
       method: "PATCH",
       path: `/webhooks/${encodeURIComponent(id)}`,
       body: {
@@ -186,7 +190,8 @@ export class WebhooksResource {
       },
     });
 
-    return webhook;
+    // Transform snake_case API response to camelCase SDK types
+    return transformKeys<Webhook>(response);
   }
 
   /**
@@ -234,12 +239,13 @@ export class WebhooksResource {
       throw new Error("Invalid webhook ID format");
     }
 
-    const result = await this.http.request<WebhookTestResult>({
+    const response = await this.http.request<unknown>({
       method: "POST",
       path: `/webhooks/${encodeURIComponent(id)}/test`,
     });
 
-    return result;
+    // Transform snake_case API response to camelCase SDK types
+    return transformKeys<WebhookTestResult>(response);
   }
 
   /**
@@ -264,12 +270,13 @@ export class WebhooksResource {
       throw new Error("Invalid webhook ID format");
     }
 
-    const rotation = await this.http.request<WebhookSecretRotation>({
+    const response = await this.http.request<unknown>({
       method: "POST",
       path: `/webhooks/${encodeURIComponent(id)}/rotate-secret`,
     });
 
-    return rotation;
+    // Transform snake_case API response to camelCase SDK types
+    return transformKeys<WebhookSecretRotation>(response);
   }
 
   /**
@@ -292,12 +299,13 @@ export class WebhooksResource {
       throw new Error("Invalid webhook ID format");
     }
 
-    const deliveries = await this.http.request<WebhookDelivery[]>({
+    const response = await this.http.request<unknown[]>({
       method: "GET",
       path: `/webhooks/${encodeURIComponent(id)}/deliveries`,
     });
 
-    return deliveries;
+    // Transform snake_case API response to camelCase SDK types
+    return response.map((item) => transformKeys<WebhookDelivery>(item));
   }
 
   /**

@@ -396,6 +396,89 @@ export class Webhooks {
   sign(payload: string): string {
     return generateWebhookSignature(payload, this.secret);
   }
+
+  // ============================================================================
+  // Static methods for backwards compatibility with existing code/tests
+  // ============================================================================
+
+  /**
+   * Verify a webhook signature (static method for backwards compatibility)
+   * @param payload - Raw request body
+   * @param signature - X-Sendly-Signature header
+   * @param secret - Your webhook secret
+   */
+  static verifySignature(
+    payload: string,
+    signature: string,
+    secret: string,
+  ): boolean {
+    return verifyWebhookSignature(payload, signature, secret);
+  }
+
+  /**
+   * Parse and verify a webhook event (static method for backwards compatibility)
+   * @param payload - Raw request body
+   * @param signature - X-Sendly-Signature header
+   * @param secret - Your webhook secret
+   */
+  static parseEvent(
+    payload: string,
+    signature: string,
+    secret: string,
+  ): WebhookEvent {
+    if (!verifyWebhookSignature(payload, signature, secret)) {
+      throw new WebhookSignatureError("Invalid webhook signature");
+    }
+
+    let event: unknown;
+    try {
+      event = JSON.parse(payload);
+    } catch {
+      throw new WebhookSignatureError("Failed to parse webhook payload");
+    }
+
+    // Support both old format (flat) and new format (nested data.object)
+    const parsed = event as Record<string, unknown>;
+
+    // Check for required fields - support both old and new format
+    if (!parsed.id || !parsed.type || !parsed.created_at) {
+      throw new WebhookSignatureError("Invalid event structure");
+    }
+
+    // If old format with flat 'data' object containing message_id
+    if (
+      parsed.data &&
+      typeof parsed.data === "object" &&
+      "message_id" in (parsed.data as object)
+    ) {
+      return event as WebhookEvent;
+    }
+
+    // If new format with data.object
+    if (
+      parsed.data &&
+      typeof parsed.data === "object" &&
+      "object" in (parsed.data as object)
+    ) {
+      return event as WebhookEvent;
+    }
+
+    // Old flat format - check for data field
+    if (!parsed.data) {
+      throw new WebhookSignatureError("Invalid event structure");
+    }
+
+    return event as WebhookEvent;
+  }
+
+  /**
+   * Generate a webhook signature (static method for backwards compatibility)
+   * @param payload - Payload to sign
+   * @param secret - Secret to use for signing
+   */
+  static generateSignature(payload: string, secret: string): string {
+    return generateWebhookSignature(payload, secret);
+  }
 }
 
 // ============================================================================

@@ -3,7 +3,7 @@
  */
 
 import { describe, it, expect } from "vitest";
-import { Webhooks, WebhookSignatureError } from "../src/webhooks";
+import { Webhooks, WebhookSignatureError } from "../src/utils/webhooks";
 import type { WebhookEvent } from "../src/types";
 
 describe("Webhooks", () => {
@@ -154,9 +154,9 @@ describe("Webhooks", () => {
         const invalidSig = "sha256=aaaaaaaaaaaaaaaa";
 
         // Both should return false, but shouldn't reveal timing information
-        expect(Webhooks.verifySignature(validPayload, invalidSig, testSecret)).toBe(
-          false,
-        );
+        expect(
+          Webhooks.verifySignature(validPayload, invalidSig, testSecret),
+        ).toBe(false);
         expect(Webhooks.verifySignature(validPayload, validSig, "wrong")).toBe(
           false,
         );
@@ -299,7 +299,10 @@ describe("Webhooks", () => {
     describe("Invalid payloads", () => {
       it("should throw WebhookSignatureError for invalid JSON", () => {
         const invalidPayload = "not valid json";
-        const signature = Webhooks.generateSignature(invalidPayload, testSecret);
+        const signature = Webhooks.generateSignature(
+          invalidPayload,
+          testSecret,
+        );
 
         expect(() => {
           Webhooks.parseEvent(invalidPayload, signature, testSecret);

@@ -727,7 +727,50 @@ export type WebhookEventType =
   | "message.sent"
   | "message.delivered"
   | "message.failed"
-  | "message.bounced";
+  | "message.bounced"
+  | "message.queued";
+
+/**
+ * Webhook event data (legacy flat format for backwards compatibility)
+ */
+export interface WebhookEventData {
+  /** Message ID */
+  message_id: string;
+  /** Message status */
+  status: string;
+  /** Recipient phone number */
+  to: string;
+  /** Sender phone number or ID */
+  from: string;
+  /** Error message if failed */
+  error?: string;
+  /** Error code if failed */
+  error_code?: string;
+  /** When delivered (ISO 8601) */
+  delivered_at?: string;
+  /** When failed (ISO 8601) */
+  failed_at?: string;
+  /** Number of SMS segments */
+  segments: number;
+  /** Credits used */
+  credits_used: number;
+}
+
+/**
+ * Webhook event payload from Sendly
+ */
+export interface WebhookEvent {
+  /** Unique event identifier (evt_xxx) */
+  id: string;
+  /** Event type */
+  type: WebhookEventType | string;
+  /** Event data */
+  data: WebhookEventData;
+  /** When event was created (ISO 8601) */
+  created_at: string;
+  /** API version */
+  api_version: string;
+}
 
 /**
  * Circuit breaker state for webhook delivery
