@@ -1,5 +1,55 @@
 # @sendly/node
 
+## 1.1.0
+
+### Minor Changes
+
+- [`3fdfec0`](https://github.com/sendly-live/sendly/commit/3fdfec09413fd09a8ceb6cd793c35f851fb43db7) Thanks [@sendly-live](https://github.com/sendly-live)! - ## Comprehensive SDK Alignment
+
+  ### API Consistency
+  - Fixed webhook API response to use consistent snake_case naming convention (REST API standard)
+  - All delivery stats fields now use snake_case: `total_deliveries`, `successful_deliveries`, `success_rate`, `last_delivery_at`
+
+  ### Node SDK
+  - Added transformation layer to convert snake_case API responses to camelCase SDK types
+  - Added `WebhooksResource` with full CRUD operations, test, rotate secret, and delivery management
+  - Added `AccountResource` with credits, transactions, and API key management
+  - Fixed Message type: removed invalid "sending" status, added `direction`, `senderType`, `telnyxMessageId`, `warning`, `senderNote` fields
+
+  ### All SDKs Updated (8 languages)
+
+  The following SDKs have been updated with consistent types, webhook management, and account resources:
+  - **Node SDK** (`@sendly/node`) - TypeScript
+  - **Python SDK** (`sendly`) - PyPI
+  - **Go SDK** (`sendly`) - pkg.go.dev
+  - **Ruby SDK** (`sendly`) - RubyGems
+  - **Java SDK** (`com.sendly`) - Maven Central
+  - **PHP SDK** (`sendly/sendly`) - Packagist
+  - **.NET SDK** (`Sendly`) - NuGet
+  - **Rust SDK** (`sendly`) - crates.io
+
+  ### New Features Across All SDKs
+  - `webhooks.create()` - Create webhook with events subscription
+  - `webhooks.list()` - List all webhooks
+  - `webhooks.get(id)` - Get webhook by ID
+  - `webhooks.update(id, options)` - Update webhook settings
+  - `webhooks.delete(id)` - Delete webhook
+  - `webhooks.test(id)` - Test webhook endpoint
+  - `webhooks.rotateSecret(id)` - Rotate webhook secret
+  - `webhooks.listDeliveries(id)` - List delivery attempts
+  - `account.get()` - Get account information
+  - `account.credits()` - Get credit balance
+  - `account.transactions()` - List credit transactions
+  - `account.apiKeys()` - List API keys
+  - `account.createApiKey(name)` - Create new API key
+  - `account.revokeApiKey(id)` - Revoke API key
+
+  ### Type Fixes
+  - MessageStatus: Removed invalid "sending" status (only: queued, sent, delivered, failed)
+  - Message: Added direction, senderType, telnyxMessageId, warning, senderNote fields
+  - Webhook: All stats fields use consistent snake_case
+  - Credits: Added availableBalance field, ensured numeric types
+
 ## 1.0.8
 
 ### Patch Changes
