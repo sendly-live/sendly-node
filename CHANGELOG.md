@@ -1,5 +1,36 @@
 # @sendly/node
 
+## 2.3.0
+
+### Minor Changes
+
+- [`ed8ebb5`](https://github.com/sendly-live/sendly/commit/ed8ebb5ede1ba9ba624906e8ce348711a2b513ea) Thanks [@sendly-live](https://github.com/sendly-live)! - Complete webhook system implementation with full SDK and CLI support.
+
+  **🚀 New Features:**
+
+  **Node.js SDK:**
+  - Fixed critical webhook path bug that caused 404 errors on all webhook endpoints
+  - All 10 webhook methods now work correctly with proper `/api/v1/webhooks` paths
+
+  **CLI:**
+  - Added complete webhook command suite (7 new commands):
+    - `sendly webhooks create` - Create webhooks with URL, events, and description
+    - `sendly webhooks get <id>` - View webhook details and status
+    - `sendly webhooks delete <id>` - Delete webhooks with confirmation
+    - `sendly webhooks test <id>` - Send test events and view responses
+    - `sendly webhooks deliveries <id>` - View delivery history and failed attempts
+    - `sendly webhooks update <id>` - Update webhook URL, events, or settings
+    - `sendly webhooks rotate-secret <id>` - Rotate webhook secrets with grace period
+
+  **Improvements:**
+  - Full feature parity between CLI and web dashboard
+  - Comprehensive error handling and user-friendly output
+  - JSON mode support for all webhook commands
+  - Interactive confirmation prompts for destructive operations
+  - Colored terminal output with status indicators
+
+  This completes the webhook ecosystem with production-ready tools across all platforms.
+
 ## 2.2.0
 
 ### Major Changes
