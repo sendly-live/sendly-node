@@ -254,17 +254,22 @@ export class MessagesResource {
       validateSenderId(request.from);
     }
 
-    // Validate scheduledAt is in the future
+    // Validate scheduledAt is in the future (Telnyx requires 5 min - 5 days)
     const scheduledTime = new Date(request.scheduledAt);
     const now = new Date();
-    const oneMinuteFromNow = new Date(now.getTime() + 60 * 1000);
+    const fiveMinutesFromNow = new Date(now.getTime() + 5 * 60 * 1000);
+    const fiveDaysFromNow = new Date(now.getTime() + 5 * 24 * 60 * 60 * 1000);
 
     if (isNaN(scheduledTime.getTime())) {
       throw new Error("Invalid scheduledAt format. Use ISO 8601 format.");
     }
 
-    if (scheduledTime <= oneMinuteFromNow) {
-      throw new Error("scheduledAt must be at least 1 minute in the future.");
+    if (scheduledTime <= fiveMinutesFromNow) {
+      throw new Error("scheduledAt must be at least 5 minutes in the future.");
+    }
+
+    if (scheduledTime > fiveDaysFromNow) {
+      throw new Error("scheduledAt must be within 5 days.");
     }
 
     const scheduled = await this.http.request<ScheduledMessage>({

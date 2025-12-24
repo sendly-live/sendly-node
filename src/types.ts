@@ -216,7 +216,7 @@ export interface ScheduleMessageRequest {
   text: string;
 
   /**
-   * When to send the message (ISO 8601 format, must be > 1 minute in future)
+   * When to send the message (ISO 8601 format, must be 5 min - 5 days in future)
    */
   scheduledAt: string;
 

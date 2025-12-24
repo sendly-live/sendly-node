@@ -130,30 +130,30 @@ describe("Scheduled Messages", () => {
             scheduledAt: "2025-01-14T10:00:00Z", // Yesterday
           }),
         ).rejects.toThrow(
-          "scheduledAt must be at least 1 minute in the future",
+          "scheduledAt must be at least 5 minutes in the future",
         );
       });
 
-      it("should throw error for scheduledAt less than 1 minute in future", async () => {
+      it("should throw error for scheduledAt less than 5 minutes in future", async () => {
         await expect(
           client.messages.schedule({
             to: "+15551234567",
             text: "Test",
-            scheduledAt: "2025-01-15T10:00:30Z", // 30 seconds in future
+            scheduledAt: "2025-01-15T10:02:00Z", // 2 minutes in future
           }),
         ).rejects.toThrow(
-          "scheduledAt must be at least 1 minute in the future",
+          "scheduledAt must be at least 5 minutes in the future",
         );
       });
 
-      it("should accept scheduledAt exactly 1 minute in future", async () => {
+      it("should accept scheduledAt at least 5 minutes in future", async () => {
         fetchMock.mockResolvedValue(mockFetchResponse(mockScheduled));
 
         await expect(
           client.messages.schedule({
             to: "+15551234567",
             text: "Test",
-            scheduledAt: "2025-01-15T10:01:01Z", // Just over 1 minute
+            scheduledAt: "2025-01-15T10:06:00Z", // 6 minutes in future
           }),
         ).resolves.toBeDefined();
       });
