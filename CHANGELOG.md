@@ -1,5 +1,22 @@
 # @sendly/node
 
+## 3.5.2
+
+### Patch Changes
+
+- [`b503f48`](https://github.com/sendly-live/sendly/commit/b503f48140b00a4d4bc3cf5227a7c96baa1b36b1) Thanks [@sendly-live](https://github.com/sendly-live)! - Improved error handling and authentication fixes
+
+  ### CLI Improvements
+  - **API Key Required Errors**: When using CLI session tokens for operations that require an API key (like sending messages), the CLI now displays a clear error with instructions on how to set up an API key
+  - **Login Code Paste Fix**: Fixed an issue where pasting login codes with hyphens (e.g., `8FV3-PAT2`) would fail validation. Codes can now be pasted directly from the terminal
+
+  ### SDK Updates
+  - **Node.js**: Added `api_key_required` to recognized authentication error codes
+  - **Python**: Added `api_key_required` to recognized authentication error codes
+
+  ### Security
+  - CLI session tokens are now explicitly rejected for message sending operations, enforcing the use of proper API keys with audit trails
+
 ## 3.4.0
 
 ### Minor Changes
