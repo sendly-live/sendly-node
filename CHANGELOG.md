@@ -1,5 +1,27 @@
 # @sendly/node
 
+## 3.5.4
+
+### Patch Changes
+
+- [`17e3435`](https://github.com/sendly-live/sendly/commit/17e343517764981741cfbae521cf5a5251895d36) Thanks [@sendly-live](https://github.com/sendly-live)! - ## Critical Bug Fixes
+
+  ### Toll-Free Verification Status
+  - Fixed: Telnyx returns `"Verified"` status but code only checked for `"approved"`
+  - Impact: Toll-free verified users can now send SMS correctly
+
+  ### SDK Fixes
+  - Node SDK: Fixed `messageType` parameter not being sent in API requests
+  - Python SDK: Added missing `message_type` parameter
+
+  ### API & Dashboard
+  - Added `GET /api/v1/credits` endpoint for SDK compatibility
+  - Dashboard live mode now properly rejects sandbox test numbers
+
+  ### Documentation
+  - All 8 SDK READMEs updated with schedule, batch, webhooks, account docs
+  - Fixed URL inconsistencies in API documentation
+
 ## 3.5.3
 
 ### Patch Changes
