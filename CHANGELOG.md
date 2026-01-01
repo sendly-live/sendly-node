@@ -1,5 +1,31 @@
 # @sendly/node
 
+## 3.6.0
+
+### Patch Changes
+
+- feat: WebSocket-based CLI webhook listener
+
+  **CLI Changes:**
+  - `sendly webhooks listen` now uses WebSocket instead of localtunnel
+  - Real-time event delivery (no more 2-second polling delay)
+  - No third-party tunnel dependencies
+  - Events are HMAC-SHA256 signed
+
+  **New Command:**
+  - `sendly trigger <event>` - Send test webhook events to your listener
+  - Supported events: message.sent, message.delivered, message.failed, message.bounced, message.received
+
+  **Example:**
+
+  ```bash
+  # Terminal 1
+  sendly webhooks listen --forward http://localhost:3000/webhook
+
+  # Terminal 2
+  sendly trigger message.delivered
+  ```
+
 ## 3.5.4
 
 ### Patch Changes
