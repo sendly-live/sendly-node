@@ -2,7 +2,7 @@
 
 ## 3.6.0
 
-### Patch Changes
+### Minor Changes
 
 - feat: WebSocket-based CLI webhook listener
 
