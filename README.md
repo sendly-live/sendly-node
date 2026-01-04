@@ -1,3 +1,12 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/SendlyHQ/sendly-node/main/.github/header.svg" alt="Sendly Node.js SDK" />
+</p>
+
+<p align="center">
+  <a href="https://www.npmjs.com/package/@sendly/node"><img src="https://img.shields.io/npm/v/@sendly/node.svg?style=flat-square" alt="npm version" /></a>
+  <a href="https://github.com/SendlyHQ/sendly-node/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/@sendly/node.svg?style=flat-square" alt="license" /></a>
+</p>
+
 # @sendly/node
 
 Official Node.js SDK for the [Sendly](https://sendly.live) SMS API.
