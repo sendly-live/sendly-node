@@ -1,5 +1,24 @@
 # @sendly/node
 
+## 3.8.0
+
+### Minor Changes
+
+- [`a3cd711`](https://github.com/sendly-live/sendly/commit/a3cd711454b002d78c924e81421c9b129dbbb546) Thanks [@sendly-live](https://github.com/sendly-live)! - ## New Features
+  - **Batch Preview (Dry Run)**: New `previewBatch()` method across all 8 SDKs to validate batch messages before sending - returns per-country credit breakdown, blocked messages, and validation errors without consuming credits
+  - **Programmatic API Key Management**: New `createApiKey()` and `revokeApiKey()` methods across all 8 SDKs for full API key lifecycle management
+  - **Webhook Event Discovery**: New `listEventTypes()` method (Java, PHP, Rust, .NET) to enumerate available webhook event types
+
+  ## Bug Fixes
+  - **Endpoint Path Corrections**: Fixed incorrect API paths in PHP, Rust, and .NET SDKs (`/account/api-keys` → `/account/keys`)
+  - **Java SDK Completeness**: Added 4 missing methods to Java `AccountResource` (`getApiKey`, `getApiKeyUsage`, `createApiKey`, `revokeApiKey`)
+  - **API Key Retrieval**: Added `getApiKey()` and `getApiKeyUsage()` to PHP, Rust, and .NET SDKs for parity with Node/Python/Ruby/Go
+
+  ## Documentation
+  - Updated all 8 SDK READMEs with comprehensive examples for new methods
+  - Fixed outdated version numbers in installation examples (Java: 3.0.1→3.7.0, Rust: 0.9.5→3.7.0, .NET: 1.0.5→3.7.0)
+  - Security audit passed: all code examples use placeholder API keys (`sk_live_v1_xxx`)
+
 ## 3.6.0
 
 ### Minor Changes
