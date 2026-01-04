@@ -1,5 +1,11 @@
 # @sendly/node
 
+## 3.8.2
+
+### Patch Changes
+
+- [`3384e3d`](https://github.com/SendlyHQ/sendly/commit/3384e3d2fd34bc38708408eed6e9eeddbcad4cc8) Thanks [@sendly-live](https://github.com/sendly-live)! - chore: migrate repository URLs to SendlyHQ organization
+
 ## 3.8.1
 
 ### Patch Changes
