@@ -17,7 +17,7 @@
 
 ### Minor Changes
 
-- [`a3cd711`](https://github.com/sendly-live/sendly/commit/a3cd711454b002d78c924e81421c9b129dbbb546) Thanks [@sendly-live](https://github.com/sendly-live)! - ## New Features
+- [`a3cd711`](https://github.com/SendlyHQ/sendly/commit/a3cd711454b002d78c924e81421c9b129dbbb546) Thanks [@SendlyHQ](https://github.com/SendlyHQ)! - ## New Features
   - **Batch Preview (Dry Run)**: New `previewBatch()` method across all 8 SDKs to validate batch messages before sending - returns per-country credit breakdown, blocked messages, and validation errors without consuming credits
   - **Programmatic API Key Management**: New `createApiKey()` and `revokeApiKey()` methods across all 8 SDKs for full API key lifecycle management
   - **Webhook Event Discovery**: New `listEventTypes()` method (Java, PHP, Rust, .NET) to enumerate available webhook event types
@@ -62,7 +62,7 @@
 
 ### Patch Changes
 
-- [`17e3435`](https://github.com/sendly-live/sendly/commit/17e343517764981741cfbae521cf5a5251895d36) Thanks [@sendly-live](https://github.com/sendly-live)! - ## Critical Bug Fixes
+- [`17e3435`](https://github.com/SendlyHQ/sendly/commit/17e343517764981741cfbae521cf5a5251895d36) Thanks [@SendlyHQ](https://github.com/SendlyHQ)! - ## Critical Bug Fixes
 
   ### Toll-Free Verification Status
   - Fixed: Telnyx returns `"Verified"` status but code only checked for `"approved"`
@@ -84,7 +84,7 @@
 
 ### Patch Changes
 
-- [`19bad0a`](https://github.com/sendly-live/sendly/commit/19bad0a44fef3ebbffe1478cd3c736d5e845cd1d) - ## Documentation Improvements
+- [`19bad0a`](https://github.com/SendlyHQ/sendly/commit/19bad0a44fef3ebbffe1478cd3c736d5e845cd1d) - ## Documentation Improvements
 
   ### New: Going Live Guide
   - Added `/docs/going-live` page with step-by-step verification flow
@@ -107,14 +107,14 @@
 
   ### SDK READMEs
   - All 8 SDKs updated with consistent sandbox numbers
-  - Fixed Go SDK path: `github.com/sendly-live/sendly-go`
+  - Fixed Go SDK path: `github.com/SendlyHQ/sendly-go`
   - Fixed domain references: `sendly.dev` → `sendly.live`
 
 ## 3.5.2
 
 ### Patch Changes
 
-- [`b503f48`](https://github.com/sendly-live/sendly/commit/b503f48140b00a4d4bc3cf5227a7c96baa1b36b1) Thanks [@sendly-live](https://github.com/sendly-live)! - Improved error handling and authentication fixes
+- [`b503f48`](https://github.com/SendlyHQ/sendly/commit/b503f48140b00a4d4bc3cf5227a7c96baa1b36b1) Thanks [@SendlyHQ](https://github.com/SendlyHQ)! - Improved error handling and authentication fixes
 
   ### CLI Improvements
   - **API Key Required Errors**: When using CLI session tokens for operations that require an API key (like sending messages), the CLI now displays a clear error with instructions on how to set up an API key
@@ -207,7 +207,7 @@
 
 ### Patch Changes
 
-- [`c5a261b`](https://github.com/sendly-live/sendly/commit/c5a261b8306e53be9d0cf37cd35827f1ec709817) Thanks [@sendly-live](https://github.com/sendly-live)! - feat: complete CLI authentication system with OAuth device flow and secure onboarding
+- [`c5a261b`](https://github.com/SendlyHQ/sendly/commit/c5a261b8306e53be9d0cf37cd35827f1ec709817) Thanks [@SendlyHQ](https://github.com/SendlyHQ)! - feat: complete CLI authentication system with OAuth device flow and secure onboarding
 
   ## 🔐 Major CLI Authentication Overhaul
 
@@ -296,7 +296,7 @@
 
 ### Minor Changes
 
-- [`ed8ebb5`](https://github.com/sendly-live/sendly/commit/ed8ebb5ede1ba9ba624906e8ce348711a2b513ea) Thanks [@sendly-live](https://github.com/sendly-live)! - Complete webhook system implementation with full SDK and CLI support.
+- [`ed8ebb5`](https://github.com/SendlyHQ/sendly/commit/ed8ebb5ede1ba9ba624906e8ce348711a2b513ea) Thanks [@SendlyHQ](https://github.com/SendlyHQ)! - Complete webhook system implementation with full SDK and CLI support.
 
   **🚀 New Features:**
 
@@ -327,7 +327,7 @@
 
 ### Major Changes
 
-- [`18380b7`](https://github.com/sendly-live/sendly/commit/18380b7f6f4fa043d85204e0d6477ef72860e750) Thanks [@sendly-live](https://github.com/sendly-live)! - ## Version Alignment
+- [`18380b7`](https://github.com/SendlyHQ/sendly/commit/18380b7f6f4fa043d85204e0d6477ef72860e750) Thanks [@SendlyHQ](https://github.com/SendlyHQ)! - ## Version Alignment
 
   Bump all SDKs to v2.2.0 to align version numbers across all registries.
 
@@ -350,7 +350,7 @@
 
 ### Minor Changes
 
-- [`3fdfec0`](https://github.com/sendly-live/sendly/commit/3fdfec09413fd09a8ceb6cd793c35f851fb43db7) Thanks [@sendly-live](https://github.com/sendly-live)! - ## Comprehensive SDK Alignment
+- [`3fdfec0`](https://github.com/SendlyHQ/sendly/commit/3fdfec09413fd09a8ceb6cd793c35f851fb43db7) Thanks [@SendlyHQ](https://github.com/SendlyHQ)! - ## Comprehensive SDK Alignment
 
   ### API Consistency
   - Fixed webhook API response to use consistent snake_case naming convention (REST API standard)
@@ -400,13 +400,13 @@
 
 ### Patch Changes
 
-- [`8de8872`](https://github.com/sendly-live/sendly/commit/8de887212e68645abeb53f33992ba62087aba711) Thanks [@sendly-live](https://github.com/sendly-live)! - fix: correct API path construction to avoid path duplication
+- [`8de8872`](https://github.com/SendlyHQ/sendly/commit/8de887212e68645abeb53f33992ba62087aba711) Thanks [@SendlyHQ](https://github.com/SendlyHQ)! - fix: correct API path construction to avoid path duplication
 
 ## 1.0.7
 
 ### Patch Changes
 
-- [`8917c36`](https://github.com/sendly-live/sendly/commit/8917c36e8d8e303261f5c27c0809c0d5554e1b03) Thanks [@sendly-live](https://github.com/sendly-live)! - fix: SDK consistency fixes - base URLs, BatchStatus enums, and versions
+- [`8917c36`](https://github.com/SendlyHQ/sendly/commit/8917c36e8d8e303261f5c27c0809c0d5554e1b03) Thanks [@SendlyHQ](https://github.com/SendlyHQ)! - fix: SDK consistency fixes - base URLs, BatchStatus enums, and versions
 
   **Critical Fixes:**
   - Node.js/Python SDK base URL: `/api` → `/api/v1` (was causing 404 errors)
@@ -422,7 +422,7 @@
 
 ### Patch Changes
 
-- [`d39d1e9`](https://github.com/sendly-live/sendly/commit/d39d1e975e05e3608a9e2c271febe5db5bb4921c) Thanks [@sendly-live](https://github.com/sendly-live)! - fix: complete SDK release pipeline automation
+- [`d39d1e9`](https://github.com/SendlyHQ/sendly/commit/d39d1e975e05e3608a9e2c271febe5db5bb4921c) Thanks [@SendlyHQ](https://github.com/SendlyHQ)! - fix: complete SDK release pipeline automation
   - Fixed Ruby SDK Gemfile.lock frozen mode issue
   - Fixed .NET SDK project paths and skipped failing tests
   - Fixed PHP SDK versioning for Packagist compatibility
@@ -433,7 +433,7 @@
 
 ### Patch Changes
 
-- [`5441597`](https://github.com/sendly-live/sendly/commit/544159770fd326b095fe1c55b0a9507d21fb4297) Thanks [@sendly-live](https://github.com/sendly-live)! - chore: verify automated SDK release pipeline
+- [`5441597`](https://github.com/SendlyHQ/sendly/commit/544159770fd326b095fe1c55b0a9507d21fb4297) Thanks [@SendlyHQ](https://github.com/SendlyHQ)! - chore: verify automated SDK release pipeline
 
   This is a test release to verify the full automated SDK release pipeline works end-to-end:
   - npm: @sendly/node, @sendly/cli
@@ -442,9 +442,9 @@
   - crates.io: sendly
   - NuGet: Sendly
   - Maven Central: live.sendly:sendly-java
-  - Go: github.com/sendly-live/sendly-go
+  - Go: github.com/SendlyHQ/sendly-go
   - Packagist: sendly/sendly-php
-  - Homebrew: sendly-live/tap/sendly
+  - Homebrew: SendlyHQ/tap/sendly
 
 ## 1.0.4
 

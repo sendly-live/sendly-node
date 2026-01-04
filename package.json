@@ -36,11 +36,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sendly-live/sendly-node.git"
+    "url": "https://github.com/SendlyHQ/sendly-node.git"
   },
   "homepage": "https://sendly.live/docs",
   "bugs": {
-    "url": "https://github.com/sendly-live/sendly-node/issues"
+    "url": "https://github.com/SendlyHQ/sendly-node/issues"
   },
   "engines": {
     "node": ">=18.0.0"
