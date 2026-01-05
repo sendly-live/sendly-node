@@ -1146,3 +1146,236 @@ export const SANDBOX_TEST_NUMBERS = {
   /** Fails with carrier_violation error */
   CARRIER_VIOLATION: "+15005550006",
 } as const;
+
+// ============================================================================
+// Verify (OTP)
+// ============================================================================
+
+/**
+ * Verification status
+ */
+export type VerificationStatus =
+  | "pending"
+  | "verified"
+  | "invalid"
+  | "expired"
+  | "failed";
+
+/**
+ * Verification delivery status
+ */
+export type VerificationDeliveryStatus =
+  | "queued"
+  | "sent"
+  | "delivered"
+  | "failed";
+
+/**
+ * Request to send a verification code
+ */
+export interface SendVerificationRequest {
+  /** Destination phone number in E.164 format */
+  to: string;
+  /** Template ID to use (defaults to preset OTP template) */
+  templateId?: string;
+  /** Verify profile ID for custom settings */
+  profileId?: string;
+  /** App name to display in message (defaults to business name) */
+  appName?: string;
+  /** Code validity in seconds (60-3600, default: 300) */
+  timeoutSecs?: number;
+  /** OTP code length (4-10, default: 6) */
+  codeLength?: number;
+}
+
+/**
+ * Response from sending a verification
+ */
+export interface SendVerificationResponse {
+  /** Verification ID */
+  id: string;
+  /** Status (always "pending" initially) */
+  status: VerificationStatus;
+  /** Phone number */
+  phone: string;
+  /** When the code expires (ISO 8601) */
+  expiresAt: string;
+  /** Whether sent in sandbox mode */
+  sandbox: boolean;
+  /** OTP code (only in sandbox mode for testing) */
+  sandboxCode?: string;
+  /** Message about sandbox mode */
+  message?: string;
+}
+
+/**
+ * Request to check a verification code
+ */
+export interface CheckVerificationRequest {
+  /** The OTP code entered by the user */
+  code: string;
+}
+
+/**
+ * Response from checking a verification
+ */
+export interface CheckVerificationResponse {
+  /** Verification ID */
+  id: string;
+  /** Status after check */
+  status: VerificationStatus;
+  /** Phone number */
+  phone: string;
+  /** When verified (ISO 8601) */
+  verifiedAt?: string;
+  /** Remaining attempts (if invalid) */
+  remainingAttempts?: number;
+}
+
+/**
+ * A verification record
+ */
+export interface Verification {
+  /** Verification ID */
+  id: string;
+  /** Status */
+  status: VerificationStatus;
+  /** Phone number */
+  phone: string;
+  /** Delivery status */
+  deliveryStatus: VerificationDeliveryStatus;
+  /** Number of check attempts */
+  attempts: number;
+  /** Maximum attempts allowed */
+  maxAttempts: number;
+  /** When the code expires (ISO 8601) */
+  expiresAt: string;
+  /** When verified (ISO 8601) */
+  verifiedAt?: string | null;
+  /** When created (ISO 8601) */
+  createdAt: string;
+  /** Whether sandbox mode */
+  sandbox: boolean;
+  /** App name used */
+  appName?: string;
+  /** Template ID used */
+  templateId?: string;
+  /** Profile ID used */
+  profileId?: string;
+}
+
+/**
+ * Options for listing verifications
+ */
+export interface ListVerificationsOptions {
+  /** Maximum number to return (1-100, default: 20) */
+  limit?: number;
+  /** Filter by status */
+  status?: VerificationStatus;
+}
+
+/**
+ * Response from listing verifications
+ */
+export interface VerificationListResponse {
+  /** Array of verifications */
+  verifications: Verification[];
+  /** Pagination info */
+  pagination: {
+    limit: number;
+    hasMore: boolean;
+  };
+}
+
+// ============================================================================
+// Templates
+// ============================================================================
+
+/**
+ * Template variable definition
+ */
+export interface TemplateVariable {
+  /** Variable key (e.g., "code", "app_name") */
+  key: string;
+  /** Variable type */
+  type: "string" | "number";
+  /** Default fallback value */
+  fallback?: string;
+}
+
+/**
+ * Template status
+ */
+export type TemplateStatus = "draft" | "published";
+
+/**
+ * An SMS template
+ */
+export interface Template {
+  /** Template ID */
+  id: string;
+  /** Template name */
+  name: string;
+  /** Message text with {{variables}} */
+  text: string;
+  /** Variables detected in the template */
+  variables: TemplateVariable[];
+  /** Whether this is a preset template */
+  isPreset: boolean;
+  /** Preset slug (e.g., "otp", "2fa") */
+  presetSlug?: string | null;
+  /** Template status */
+  status: TemplateStatus;
+  /** Version number */
+  version: number;
+  /** When published (ISO 8601) */
+  publishedAt?: string | null;
+  /** When created (ISO 8601) */
+  createdAt: string;
+  /** When updated (ISO 8601) */
+  updatedAt: string;
+}
+
+/**
+ * Request to create a template
+ */
+export interface CreateTemplateRequest {
+  /** Template name */
+  name: string;
+  /** Message text (use {{code}} and {{app_name}} variables) */
+  text: string;
+}
+
+/**
+ * Request to update a template
+ */
+export interface UpdateTemplateRequest {
+  /** New template name */
+  name?: string;
+  /** New message text */
+  text?: string;
+}
+
+/**
+ * Response from listing templates
+ */
+export interface TemplateListResponse {
+  /** Array of templates */
+  templates: Template[];
+}
+
+/**
+ * Template preview with interpolated text
+ */
+export interface TemplatePreview {
+  /** Template ID */
+  id: string;
+  /** Template name */
+  name: string;
+  /** Original text with variables */
+  originalText: string;
+  /** Interpolated text with sample values */
+  previewText: string;
+  /** Variables detected */
+  variables: TemplateVariable[];
+}

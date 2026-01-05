@@ -70,6 +70,30 @@ export type {
 // Types - Account & Credits
 export type { Account, Credits, CreditTransaction, ApiKey } from "./types";
 
+// Types - Verify (OTP)
+export type {
+  VerificationStatus,
+  VerificationDeliveryStatus,
+  SendVerificationRequest,
+  SendVerificationResponse,
+  CheckVerificationRequest,
+  CheckVerificationResponse,
+  Verification,
+  ListVerificationsOptions,
+  VerificationListResponse,
+} from "./types";
+
+// Types - Templates
+export type {
+  TemplateVariable,
+  TemplateStatus,
+  Template,
+  CreateTemplateRequest,
+  UpdateTemplateRequest,
+  TemplateListResponse,
+  TemplatePreview,
+} from "./types";
+
 // Constants
 export {
   CREDITS_PER_SMS,

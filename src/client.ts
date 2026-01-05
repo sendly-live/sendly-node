@@ -8,6 +8,8 @@ import { HttpClient } from "./utils/http";
 import { MessagesResource } from "./resources/messages";
 import { WebhooksResource } from "./resources/webhooks";
 import { AccountResource } from "./resources/account";
+import { VerifyResource } from "./resources/verify";
+import { TemplatesResource } from "./resources/templates";
 
 const DEFAULT_BASE_URL = "https://sendly.live/api/v1";
 const DEFAULT_TIMEOUT = 30000;
@@ -99,6 +101,49 @@ export class Sendly {
    */
   public readonly account: AccountResource;
 
+  /**
+   * Verify API resource - OTP verification
+   *
+   * @example
+   * ```typescript
+   * // Send an OTP
+   * const verification = await sendly.verify.send({
+   *   to: '+15551234567',
+   *   appName: 'MyApp'
+   * });
+   *
+   * // Check the OTP (user enters code)
+   * const result = await sendly.verify.check(verification.id, {
+   *   code: '123456'
+   * });
+   *
+   * if (result.status === 'verified') {
+   *   console.log('Phone verified!');
+   * }
+   * ```
+   */
+  public readonly verify: VerifyResource;
+
+  /**
+   * Templates API resource - SMS template management
+   *
+   * @example
+   * ```typescript
+   * // List preset templates
+   * const { templates } = await sendly.templates.presets();
+   *
+   * // Create a custom template
+   * const template = await sendly.templates.create({
+   *   name: 'My OTP',
+   *   text: 'Your {{app_name}} code is {{code}}'
+   * });
+   *
+   * // Publish for use
+   * await sendly.templates.publish(template.id);
+   * ```
+   */
+  public readonly templates: TemplatesResource;
+
   private readonly http: HttpClient;
   private readonly config: Required<SendlyConfig>;
 
@@ -137,6 +182,8 @@ export class Sendly {
     this.messages = new MessagesResource(this.http);
     this.webhooks = new WebhooksResource(this.http);
     this.account = new AccountResource(this.http);
+    this.verify = new VerifyResource(this.http);
+    this.templates = new TemplatesResource(this.http);
   }
 
   /**
